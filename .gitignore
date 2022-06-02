@@ -1,23 +1,298 @@
-# Compiled class file
-*.class
-
-# Log file
-*.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
+Skip to content
+ 
+Search…
+All gists
+Back to GitHub
+@jefflu553 
+@dedunumax
+dedunumax/.gitignore Java
+Last active 15 hours ago • Report abuse
+277
+81
+Code
+Revisions
+19
+Stars
+277
+Forks
+81
+<script src="https://gist.github.com/dedunumax/54e82214715e35439227.js"></script>
+A complete .gitignore file for Java.
+.gitignore Java
+##############################
+## Java
+##############################
 .mtj.tmp/
-
-# Package Files #
+*.class
 *.jar
 *.war
-*.nar
 *.ear
-*.zip
-*.tar.gz
-*.rar
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+*.nar
 hs_err_pid*
+
+##############################
+## Maven
+##############################
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+pom.xml.bak
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+##############################
+## Gradle
+##############################
+bin/
+build/
+.gradle
+.gradletasknamecache
+gradle-app.setting
+!gradle-wrapper.jar
+
+##############################
+## IntelliJ
+##############################
+out/
+.idea/
+.idea_modules/
+*.iml
+*.ipr
+*.iws
+
+##############################
+## Eclipse
+##############################
+.settings/
+bin/
+tmp/
+.metadata
+.classpath
+.project
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.factorypath
+
+##############################
+## NetBeans
+##############################
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+##############################
+## Visual Studio Code
+##############################
+.vscode/
+.code-workspace
+
+##############################
+## OS X
+##############################
+.DS_Store
+Load earlier comments...
+@yashinweb
+yashinweb commented on 29 Oct 2019
+Very nice, thx
+
+@pndurette
+pndurette commented on 2 Nov 2019
+Thanks for this!
+I noticed in a project I'm working on, the file .factorypath gets also auto-build (by VS Code, but seems to be an Eclipse thing as well)
+
+@dedunumax
+Author
+dedunumax commented on 3 Nov 2019
+I thought VSCode doesn't create files. Let me check and I will change the file accordingly. Thanks a lot for the suggestion.
+
+@pndurette
+pndurette commented on 3 Nov 2019
+Could possibly be maven as well—
+(I work with this project but not with the Java portion specifically)
+
+@danjee
+danjee commented on 12 Jan 2020
+Can you can add pom.xml.bak ? Sort plugins makes a backup of the pom file
+
+@dedunumax
+Author
+dedunumax commented on 12 Jan 2020
+Could possibly be maven as well—
+(I work with this project but not with the Java portion specifically)
+
+.fatctorpath is a result of Eclipse. So I added it to the Eclipse section.
+
+@dedunumax
+Author
+dedunumax commented on 12 Jan 2020
+Can you can add pom.xml.bak ? Sort plugins make a backup of the pom file
+
+I added the pom.xml.bak too. Thank you!
+
+@ckzgraphics
+ckzgraphics commented on 27 Jan 2020
+Useful gist +1
+
+You may add the following as well -
+
+##############################
+
+Visual Studio Code
+##############################
+.vscode/
+
+@falktan
+falktan commented on 18 Mar 2020
+I thought VSCode doesn't create files. Let me check and I will change the file accordingly. Thanks a lot for the suggestion.
+
+Apparently VSCode produces pretty much the same files as Eclipse.
+It might be reasonable to adjust the comment from "Eclipse" to "Eclipse / VSCode".
+
+@dedunumax
+Author
+dedunumax commented on 19 Mar 2020
+Useful gist +1
+
+You may add the following as well -
+
+##############################
+
+Visual Studio Code
+##############################
+.vscode/
+
+Done!
+
+@dedunumax
+Author
+dedunumax commented on 19 Mar 2020
+I thought VSCode doesn't create files. Let me check and I will change the file accordingly. Thanks a lot for the suggestion.
+
+Apparently VSCode produces pretty much the same files as Eclipse.
+It might be reasonable to adjust the comment from "Eclipse" to "Eclipse / VSCode".
+
+Thanks a lot for the suggestion! I think they depend on the tools/extensions used with VSCode.
+
+@joedatlive
+joedatlive commented on 26 Mar 2020
+How about the work space files for VSCode?
+*.code-workspace
+
+@alvhix
+alvhix commented on 29 Apr 2020
+Thank you very much!
+
+@dedunumax
+Author
+dedunumax commented on 19 May 2020
+How about the work space files for VSCode?
+*.code-workspace
+
+Done! :D
+
+@ckzgraphics
+ckzgraphics commented on 25 May 2020
+Another good source- https://www.gitignore.io/
+
+Java- https://www.gitignore.io/api/java%2Cintellij
+
+Original Post- https://stackoverflow.com/a/38259237/2923098
+
+@dedunumax
+Author
+dedunumax commented on 25 May 2020
+Thanks a lot, @ckzgraphics! I personally believe checked in code should be IDE neutral. I don't like adding any file related to the .idea/ folder in the repository.
+
+@ckzgraphics
+ckzgraphics commented on 26 May 2020
+Yep, @dedunumax. Commented for better reach to the resource smiley
+
+@dedunumax
+Author
+dedunumax commented on 14 Jun 2020
+Yep, @dedunumax. Commented for better reach to the resource smiley
+
+Cool. :D
+
+@belhassenessid
+belhassenessid commented on 17 Apr 2021
+thanks!
+
+@serhiihoroshko
+serhiihoroshko commented on 28 Apr 2021
+Thanks!
+
+@money-seoh
+money-seoh commented on 8 May 2021
+Thank you very much for .gitignore example for java files. It helped me a lot.
+
+@NedkaBlagoeva
+NedkaBlagoeva commented on 11 Aug 2021
+I'll definitely use it, thanks for sharing :)
+
+@hasanhg
+hasanhg commented on 2 Sep 2021
+Thanks!
+
+@gibrancastillo
+gibrancastillo commented on 30 Sep 2021
+Thank you, one for all IDEs. :-)
+
+@Attete
+Attete commented on 24 Oct 2021
+Thanks!
+
+@andresfeelip29
+andresfeelip29 commented on 26 Nov 2021
+ty;
+
+@rr-cory-hartford
+rr-cory-hartford commented on 15 Jan
+Rad. Thanks :)
+
+@OpaJaa
+OpaJaa commented on 9 Feb
+Thanks! Using macOs, Netbeans and IntelliJ so good to have comprehensive ignoring :)
+
+@Enter55
+Enter55 commented on 24 Feb
+I needed it I only knew it from Visual studio
+
+Thank you!
+
+@ecivil
+ecivil commented on 30 Apr
+Thanks ... nice job.
+Can you add *.NavData ?
+
+@jefflu553
+ 
+Leave a comment
+No file chosen
+Attach files by dragging & dropping, selecting or pasting them.
+© 2022 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+
