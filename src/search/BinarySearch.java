@@ -6,7 +6,6 @@ import java.util.List;
 
 public class BinarySearch<K extends Comparable<K>, V> {
 	private Node[] arr;
-	private int capacity;
 	private int size;
 	
 	
@@ -15,7 +14,6 @@ public class BinarySearch<K extends Comparable<K>, V> {
 	public BinarySearch(int capacity) {
 		super();
 		this.arr = (BinarySearch<K, V>.Node[]) Array.newInstance(Node.class, capacity);
-		this.capacity = capacity;
 	}
 	
 	public int size() {
