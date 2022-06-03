@@ -9,6 +9,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import entity.MyLocalTime;
+
 public class BinarySearchTest {
 	
 	private BinarySearch<Character, Integer> p;

@@ -7,6 +7,8 @@ import java.time.LocalTime;
 import org.junit.Before;
 import org.junit.Test;
 
+import entity.MyLocalTime;
+
 public class UnorderedSequencialSearchTest {
 	
 	private UnorderedSequencialSearch<MyLocalTime, String> localTimes;

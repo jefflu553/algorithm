@@ -1,4 +1,4 @@
-package search;
+package entity;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
