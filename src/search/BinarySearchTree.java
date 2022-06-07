@@ -1,11 +1,52 @@
 package search;
 
-import java.util.Iterator;
-
 public class BinarySearchTree<K extends Comparable<K>, V> {
 	
 	private Node root;
 	private int size;
+	
+	public int rank(K key) {
+		return rankTree(key, root);
+	}
+	
+	private int rankTree(K key, Node root) {
+		if(null == root) return 0;
+		int cmp = root.getKey().compareTo(key);
+		if(0 == cmp) return (null == root.getLeft()) ? 0 : root.getLeft().getSize();
+		else if(cmp > 0) return rankTree(key, root.getLeft());
+		int left = (null == root.getLeft()) ? 0 : root.getLeft().getSize();
+		return 1 + left + rankTree(key, root.getRight());
+	}
+	
+	public K floor(K key) {
+		if(null == key || null == root) return null;
+		return floorTree(key, root);
+	}
+	
+	public K ceiling(K key) {
+		if(null == key || null == root) return null;
+		return ceilingTree(key, root);
+	}
+	
+	private K ceilingTree(K key, Node tree) {
+		if(null == tree) return null;
+		int compared = tree.getKey().compareTo(key);
+		if(compared == 0) return tree.getKey();
+		if(compared < 0) return ceilingTree(key, tree.getRight());
+		K ceiling = ceilingTree(key, tree.getLeft());
+		if(null == ceiling) return tree.getKey();
+		return ceiling;
+	}
+	
+	private K floorTree(K key, Node tree) {
+		if(null == tree) return null;
+		int compared = tree.getKey().compareTo(key);
+		if(compared == 0) return tree.getKey();
+		if(compared > 0) return floorTree(key, tree.getLeft());
+		K floor = floorTree(key, tree.getRight());
+		if(null == floor) return tree.getKey();
+		return floor;
+	}
 	
 	public K min() {
 		return minTree(root);
@@ -49,7 +90,6 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
 	
 	private Node putTree(K key, V value, Node tree) {
 		if(tree == null) {
-			this.size++;
 			return new Node(key, value, null, null);
 		}else if(tree.getKey().compareTo(key) == 0) {
 			tree.setValue(value);
@@ -91,6 +131,14 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
 		private V value;
 		private Node left;
 		private Node right;
+		private int size;
+		
+		public int getSize() {
+			return size;
+		}
+		public void setSize(int size) {
+			this.size = size;
+		}
 		public K getKey() {
 			return key;
 		}
@@ -108,12 +156,19 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
 		}
 		public void setLeft(Node left) {
 			this.left = left;
+			calSize();
 		}
 		public Node getRight() {
 			return right;
 		}
 		public void setRight(Node right) {
 			this.right = right;
+			calSize();
+		}
+		private void calSize() {
+			this.size = 1;
+			if(null != left) this.size = this.size + left.getSize();
+			if(null != right) this.size = this.size + right.getSize();
 		}
 		public Node(K key, V value, BinarySearchTree<K, V>.Node left, BinarySearchTree<K, V>.Node right) {
 			super();
@@ -121,6 +176,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
 			this.value = value;
 			this.left = left;
 			this.right = right;
+			calSize();
 		}
 		
 		
