@@ -148,4 +148,24 @@ public class BinarySearchTreeTest {
 		assertTrue("asdf", p.size() == 7);
 		assertTrue("asdf", "C E H M R S X ".equals(p.toString()));
 	}
+	
+	@Test
+	public void testHeightRecursive() {
+		BinarySearchTree<Character, Integer> tmp = createForTmp();
+		assertTrue("asdf", tmp.heightRecursive() == 4);
+		tmp.delete('M');
+		assertTrue("asdf", tmp.heightRecursive() == 3);
+		tmp.delete('C');
+		assertTrue("asdf", tmp.heightRecursive() == 3);
+	}
+	
+	@Test
+	public void testHeight() {
+		BinarySearchTree<Character, Integer> tmp = createForTmp();
+		assertTrue("asdf", tmp.heightRecursive() == 4);
+		tmp.delete('M');
+		assertTrue("asdf", tmp.heightRecursive() == 3);
+		tmp.delete('C');
+		assertTrue("asdf", tmp.heightRecursive() == 3);
+	}
 }

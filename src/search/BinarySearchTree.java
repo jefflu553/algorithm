@@ -4,6 +4,21 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
 	
 	private Node root;
 	
+	public int height() {
+		if(null == root) return 0;
+		return root.getHeight();
+	}
+	
+	public int heightRecursive() {
+		if(null == root) return 0;
+		return heightRecursive(root);
+	}
+	
+	private int heightRecursive(Node tree) {
+		if(null == tree) return -1;
+		return 1 + Math.max( heightRecursive(tree.getLeft()), heightRecursive(tree.getRight()) );
+	}
+	
 	public int size() {
 		if(null == root) return 0;
 		return size(root);
@@ -26,7 +41,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
 			else if(null != tree.getLeft() && null != tree.getRight()) {
 				K minK = minTree(tree.getRight());
 				V minV = getTree(key, tree.getRight());
-				Node replace = new Node(minK, minV, 1);
+				Node replace = new Node(minK, minV, 1, -1);
 				replace.setLeft(tree.getLeft());
 				replace.setRight(tree.getRight());
 				replace.setSize( 1 + size(replace.getLeft()) + size(replace.getRight()) );
@@ -37,6 +52,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
 		if(cmp > 0) tree.setLeft(delete(key, tree.getLeft()));
 		else if(cmp < 0) tree.setRight(delete(key, tree.getRight()));
 		tree.setSize( 1 + size(tree.getLeft()) + size(tree.getRight()) );
+		tree.setHeight( 1 + heightRecursive(tree.getLeft()) + heightRecursive(tree.getRight()) );
 		return tree;
 	}
 
@@ -163,17 +179,20 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
 	
 	private Node putTree(K key, V value, Node tree) {
 		if(tree == null) {
-			return new Node(key, value, 1);
+			return new Node(key, value, 1, -1);
 		}
 		int cmp = tree.getKey().compareTo(key);
 		if(cmp == 0) {
 			tree.setValue(value);
 		}else if(cmp < 0) {
 			tree.setRight(putTree(key, value, tree.getRight()));
+			tree.setSize( 1 + size(tree.getLeft()) + size(tree.getRight()) ); //由于左右子树已经产生变化，所以要重新计算size.
+			tree.setHeight( 1 + heightRecursive(tree.getLeft()) + heightRecursive(tree.getRight()) );
 		}else {
 			tree.setLeft(putTree(key, value, tree.getLeft()));
+			tree.setSize( 1 + size(tree.getLeft()) + size(tree.getRight()) );
+			tree.setHeight( 1 + heightRecursive(tree.getLeft()) + heightRecursive(tree.getRight()) );
 		}
-		tree.setSize( 1 + size(tree.getLeft()) + size(tree.getRight()) );
 		return tree;
 	}
 	
@@ -202,7 +221,16 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
 		private Node left;
 		private Node right;
 		private int size;
+		private int height;
 		
+		
+		
+		public int getHeight() {
+			return height;
+		}
+		public void setHeight(int height) {
+			this.height = height;
+		}
 		public int getSize() {
 			return size;
 		}
@@ -234,13 +262,12 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
 			this.right = right;
 		}
 
-		public Node(K key, V value, int size) {
+		public Node(K key, V value, int size, int height) {
 			super();
 			this.key = key;
 			this.value = value;
 			this.size = size;
-			this.left = null;
-			this.right = null;
+			this.height = height;
 		}
 		
 		
