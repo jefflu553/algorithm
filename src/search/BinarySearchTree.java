@@ -3,7 +3,80 @@ package search;
 public class BinarySearchTree<K extends Comparable<K>, V> {
 	
 	private Node root;
-	private int size;
+	
+	public int size() {
+		if(null == root) return 0;
+		return size(root);
+	}
+	
+	private int size(Node tree) {
+		if(null == tree) return 0;
+		return tree.getSize();
+	}
+	
+	public void delete(K key) {
+		delete(key, root);
+	}
+	
+	private Node delete(K key, Node tree) {
+		if(null == tree) return null;
+		int cmp = tree.getKey().compareTo(key);
+		if(0 == cmp) {
+			if(null == tree.getLeft() && null == tree.getRight()) return null;
+			else if(null != tree.getLeft() && null != tree.getRight()) {
+				K minK = minTree(tree.getRight());
+				V minV = getTree(key, tree.getRight());
+				Node replace = new Node(minK, minV, 1);
+				replace.setLeft(tree.getLeft());
+				replace.setRight(tree.getRight());
+				replace.setSize( 1 + size(replace.getLeft()) + size(replace.getRight()) );
+				return replace;
+			}else if(null == tree.getLeft()) return tree.getRight();
+			else return tree.getLeft();
+		}
+		if(cmp > 0) tree.setLeft(delete(key, tree.getLeft()));
+		else if(cmp < 0) tree.setRight(delete(key, tree.getRight()));
+		tree.setSize( 1 + size(tree.getLeft()) + size(tree.getRight()) );
+		return tree;
+	}
+
+	public void deleteMin() {
+		if(null == root) return;
+		root = deleteMin(root);
+	}
+	
+	private Node deleteMin(Node tree) {
+		if(null == tree.getLeft()) return tree.getRight();
+		else tree.setLeft(deleteMin(tree.getLeft()));
+		tree.setSize( 1 + size(tree.getLeft()) + size(tree.getRight()) );
+		return tree;
+	}
+	
+	public void deleteMax() {
+		if(null == root) return;
+		root = deleteMax(root);
+	}
+	
+	private Node deleteMax(Node tree) {
+		if(null == tree.getRight()) return tree.getLeft();
+		else tree.setRight(deleteMax(tree.getRight()));
+		tree.setSize( 1 + size(tree.getLeft()) + size(tree.getRight()) );
+		return tree;
+	}
+	
+	public K select(int num) {
+		if(num < 0) return null;
+		return selectTree(num, root);
+	}
+	
+	private K selectTree(int num, Node tree) {
+		if(null == tree) return null;
+		int leftAmount = 0;
+		if(null != tree.getLeft()) leftAmount = tree.getLeft().getSize();
+		if(leftAmount == num) return tree.getKey();
+		else if(leftAmount > num) return selectTree(num, tree.getLeft());
+		return selectTree(num - 1 - leftAmount, tree.getRight());
+	}
 	
 	public int rank(K key) {
 		return rankTree(key, root);
@@ -90,14 +163,17 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
 	
 	private Node putTree(K key, V value, Node tree) {
 		if(tree == null) {
-			return new Node(key, value, null, null);
-		}else if(tree.getKey().compareTo(key) == 0) {
+			return new Node(key, value, 1);
+		}
+		int cmp = tree.getKey().compareTo(key);
+		if(cmp == 0) {
 			tree.setValue(value);
-		}else if(tree.getKey().compareTo(key) < 0) {
+		}else if(cmp < 0) {
 			tree.setRight(putTree(key, value, tree.getRight()));
 		}else {
 			tree.setLeft(putTree(key, value, tree.getLeft()));
 		}
+		tree.setSize( 1 + size(tree.getLeft()) + size(tree.getRight()) );
 		return tree;
 	}
 	
@@ -119,14 +195,8 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
 	public void setRoot(Node root) {
 		this.root = root;
 	}
-	public int getSize() {
-		return size;
-	}
-	public void setSize(int size) {
-		this.size = size;
-	}
 
-	private class Node{
+	public class Node{
 		private K key;
 		private V value;
 		private Node left;
@@ -156,27 +226,21 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
 		}
 		public void setLeft(Node left) {
 			this.left = left;
-			calSize();
 		}
 		public Node getRight() {
 			return right;
 		}
 		public void setRight(Node right) {
 			this.right = right;
-			calSize();
 		}
-		private void calSize() {
-			this.size = 1;
-			if(null != left) this.size = this.size + left.getSize();
-			if(null != right) this.size = this.size + right.getSize();
-		}
-		public Node(K key, V value, BinarySearchTree<K, V>.Node left, BinarySearchTree<K, V>.Node right) {
+
+		public Node(K key, V value, int size) {
 			super();
 			this.key = key;
 			this.value = value;
-			this.left = left;
-			this.right = right;
-			calSize();
+			this.size = size;
+			this.left = null;
+			this.right = null;
 		}
 		
 		

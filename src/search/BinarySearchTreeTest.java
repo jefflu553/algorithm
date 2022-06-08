@@ -2,15 +2,15 @@ package search;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class BinarySearchTreeTest {
-	private BinarySearchTree<Character, Integer> p;
-	private BinarySearchTree<Character, Integer> fromBook;
+	private static BinarySearchTree<Character, Integer> p;
+	private static BinarySearchTree<Character, Integer> fromBook;
 	
-	@Before
-    public void init() {
+	@BeforeClass
+    public static void init() {
 		p = new BinarySearchTree<>();
 		p.put('S', 0);
 		p.put('E', 1);
@@ -37,7 +37,7 @@ public class BinarySearchTreeTest {
 	
 	@Test
 	public void testPut() {
-		assertTrue("asdf", p.getSize() == 7);
+		assertTrue("asdf", p.getRoot().getSize() == 7);
 		assertTrue("asdf", "C E H M R S X ".equals(p.toString()));
 	}
 
@@ -49,7 +49,7 @@ public class BinarySearchTreeTest {
 	
 	@Test
 	public void testMin() {
-		assertTrue("asdf", p.min().compareTo('A') == 0);
+		assertTrue("asdf", p.min().compareTo('C') == 0);
 		BinarySearchTree<Character, Integer> n = new BinarySearchTree<>();
 		assertTrue("asdf", n.min() == null);
 	}
@@ -85,5 +85,67 @@ public class BinarySearchTreeTest {
 		assertTrue("asdf", fromBook.rank('Z') == 8);
 		assertTrue("asdf", fromBook.rank('I') == 4);
 	}
+	
+	@Test
+	public void testSelect() {
+		assertTrue("asdf", fromBook.select(3).compareTo('H') == 0);
+		assertTrue("asdf", fromBook.select(0).compareTo('A') == 0);
+		assertTrue("asdf", fromBook.select(-1) == null);
+		assertTrue("asdf", fromBook.select(8) == null);
+	}
+	
+	private BinarySearchTree<Character, Integer> createForTmp() {
+		BinarySearchTree<Character, Integer> fromBook = new BinarySearchTree<>();
+		fromBook.put('S', 0);
+		fromBook.put('E', 0);
+		fromBook.put('X', 0);
+		fromBook.put('A', 0);
+		fromBook.put('C', 0);
+		fromBook.put('R', 0);
+		fromBook.put('H', 0);
+		fromBook.put('M', 0);
+		return fromBook;
+	}
+	
+	@Test
+	public void testDeleteMin() {
+		BinarySearchTree<Character, Integer> tmp = createForTmp();
+		assertTrue("asdf", tmp.getRoot().getSize() == 8);
+		tmp.deleteMin();
+		assertTrue("asdf", tmp.getRoot().getSize() == 7);
+		assertTrue("asdf", "C E H M R S X ".equals(tmp.toString()));
+	}
+	
+	@Test
+	public void testDeleteMax() {
+		BinarySearchTree<Character, Integer> tmp = createForTmp();
+		assertTrue("asdf", tmp.getRoot().getSize() == 8);
+		tmp.deleteMax();
+		assertTrue("asdf", tmp.getRoot().getSize() == 7);
+		assertTrue("asdf", "A C E H M R S ".equals(tmp.toString()));
+	}
+	
+	@Test
+	public void testDelete() {
+		BinarySearchTree<Character, Integer> tmp = createForTmp();
+		assertTrue("asdf", tmp.getRoot().getSize() == 8);
+		tmp.delete('H');
+		assertTrue("asdf", tmp.getRoot().getSize() == 7);
+		assertTrue("asdf", "A C E M R S X ".equals(tmp.toString()));
+		tmp.delete('A');
+		assertTrue("asdf", tmp.getRoot().getSize() == 6);
+		assertTrue("asdf", "C E M R S X ".equals(tmp.toString()));
+		tmp.delete('X');
+		assertTrue("asdf", tmp.getRoot().getSize() == 5);
+		assertTrue("asdf", "C E M R S ".equals(tmp.toString()));
+		tmp.delete('F');
+		assertTrue("asdf", tmp.getRoot().getSize() == 5);
+		assertTrue("asdf", "C E M R S ".equals(tmp.toString()));
+	}
 
+	@Test
+	public void testSize() {
+		assertTrue("asdf", p.size() == 7);
+		assertTrue("asdf", "C E H M R S X ".equals(p.toString()));
+	}
 }
