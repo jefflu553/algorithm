@@ -1,29 +1,29 @@
 package search;
 
-import java.util.Stack;
+import entity.INode;
 
 public class AVLTree<K extends Comparable<K>, V> {
 
-	private Node root;
+	private INode<K, V> root;
 	
 	public void delete(K key) {
 		root = delete(key, root);
 	}
 	
-	private K minTree(Node tree) {
+	private K minTree(INode<K, V> tree) {
 		if(tree == null) return null;
 		if(tree.getLeft() != null) return minTree(tree.getLeft());
 		return tree.getKey();
 	}
 	
-	private V getTree(K key, Node tree) {
+	private V getTree(K key, INode<K, V> tree) {
 		if(tree == null) return null;
 		if(tree.getKey().compareTo(key) == 0) return tree.getValue();
 		else if(tree.getKey().compareTo(key) > 0) return getTree(key, tree.getLeft());
 		return getTree(key, tree.getRight());
 	}
 	
-	private Node rebalanceOnDelete(K key, Node tree) {
+	private INode<K, V> rebalanceOnDelete(K key, INode<K, V> tree) {
 		if(tree.getKey().compareTo(key) < 0) { // key has been deleted on right
 			int factor = factor(tree.getLeft());
 			if(factor >= 0) {
@@ -44,7 +44,7 @@ public class AVLTree<K extends Comparable<K>, V> {
 		return tree;
 	}
 	
-	private Node delete(K key, Node tree) {
+	private INode<K, V> delete(K key, INode<K, V> tree) {
 		if(null == tree) return null;
 		int cmp = tree.getKey().compareTo(key);
 		if(0 == cmp) {
@@ -52,7 +52,7 @@ public class AVLTree<K extends Comparable<K>, V> {
 			else if(null != tree.getLeft() && null != tree.getRight()) {
 				K minK = minTree(tree.getRight());
 				V minV = getTree(key, tree.getRight());
-				Node replace = new Node(minK, minV, 1);
+				INode<K, V> replace = new Node(minK, minV, 1);
 				replace.setLeft(tree.getLeft());
 				replace.setRight(tree.getRight());
 				return replace;
@@ -66,11 +66,11 @@ public class AVLTree<K extends Comparable<K>, V> {
 		return tree;
 	}
 
-	public Node getRoot() {
+	public INode<K, V> getRoot() {
 		return root;
 	}
 
-	public void setRoot(Node root) {
+	public void setRoot(INode<K, V> root) {
 		this.root = root;
 	}
 
@@ -79,26 +79,26 @@ public class AVLTree<K extends Comparable<K>, V> {
 		return;
 	}
 
-	private Node rightRotate(Node tree) {
-		Node result = tree.getLeft();
+	private INode<K, V> rightRotate(INode<K, V> tree) {
+		INode<K, V> result = tree.getLeft();
 		tree.setLeft(result.getRight());
 		result.setRight(tree);
 		return result;
 	}
 
-	private Node leftRotate(Node tree) {
-		Node result = tree.getRight();
+	private INode<K, V> leftRotate(INode<K, V> tree) {
+		INode<K, V> result = tree.getRight();
 		tree.setRight(result.getLeft());
 		result.setLeft(tree);
 		return result;
 	};
 	
-	private int factor(Node tree) {
+	private int factor(INode<K, V> tree) {
 		int f = height(tree.getLeft()) - height(tree.getRight());
 		return f;
 	}
 
-	private Node rebalance(K key, Node tree) {
+	private INode<K, V> rebalance(K key, INode<K, V> tree) {
 		int factor = factor(tree);
 		if (factor > 1) {
 			int cmp = tree.getLeft().getKey().compareTo(key);
@@ -120,7 +120,7 @@ public class AVLTree<K extends Comparable<K>, V> {
 		return tree;
 	}
 
-	private Node putTree(K key, V value, Node tree) {
+	private INode<K, V> putTree(K key, V value, INode<K, V> tree) {
 		if (tree == null) {
 			return new Node(key, value, 1);
 		}
@@ -148,55 +148,17 @@ public class AVLTree<K extends Comparable<K>, V> {
 		return height(root);
 	}
 
-	public int height(Node tree) {
+	public int height(INode<K, V> tree) {
 		if (null == tree)
 			return -1;
 		return 1 + Math.max(height(tree.getLeft()), height(tree.getRight()));
 	}
 
-	public void displayTree() {
-		Stack<Node> globalStack = new Stack<>();
-		globalStack.push(root);
-		int emptyLeaf = 32;
-		boolean isRowEmpty = false;
-		System.out.println("****......................................................****");
-		while (isRowEmpty == false) {
-
-			Stack<Node> localStack = new Stack<>();
-			isRowEmpty = true;
-			for (int j = 0; j < emptyLeaf; j++)
-				System.out.print(' ');
-			while (globalStack.isEmpty() == false) {
-				Node temp = globalStack.pop();
-				if (temp != null) {
-					System.out.print(temp.key);
-					localStack.push(temp.left);
-					localStack.push(temp.right);
-					if (temp.left != null || temp.right != null)
-						isRowEmpty = false;
-				} else {
-					System.out.print("--");
-					localStack.push(null);
-					localStack.push(null);
-				}
-				for (int j = 0; j < emptyLeaf * 2 - 2; j++)
-					System.out.print(' ');
-			}
-			System.out.println();
-			emptyLeaf /= 2;
-			while (localStack.isEmpty() == false)
-				globalStack.push(localStack.pop());
-		}
-		System.out.println("****......................................................****");
-	}
-	
-	
-
-	public class Node {
+	public class Node implements INode<K, V> {
 		private K key;
 		private V value;
-		private Node left;
-		private Node right;
+		private INode<K, V> left;
+		private INode<K, V> right;
 		private int size;
 
 		public int getSize() {
@@ -223,24 +185,24 @@ public class AVLTree<K extends Comparable<K>, V> {
 			this.value = value;
 		}
 
-		public Node getLeft() {
+		public INode<K, V> getLeft() {
 			return left;
 		}
 
-		public void setLeft(Node left) {
+		@Override
+		public void setLeft(INode<K, V> left) {
 			this.left = left;
 		}
 
-		public Node getRight() {
+		public INode<K, V> getRight() {
 			return right;
 		}
 
-		public void setRight(Node right) {
+		public void setRight(INode<K, V> right) {
 			this.right = right;
 		}
 
 		public Node(K key, V value, int size) {
-			super();
 			this.key = key;
 			this.value = value;
 			this.size = size;

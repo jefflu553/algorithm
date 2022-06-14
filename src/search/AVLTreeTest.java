@@ -25,9 +25,9 @@ public class AVLTreeTest {
 	public void testPut() {
 		AVLTree<Integer, Integer> p = createAVLTree();
 		AVLTree<Integer, Integer> a = new AVLTree<>();
-		p.displayTree();
+		BinaryTreeUtils.displayTree(p.getRoot());
 		p.put(14, 0);
-		p.displayTree();
+		BinaryTreeUtils.displayTree(p.getRoot());
 		a.put(13, 0);
 		a.put(10, 0);
 		a.put(15, 0);
@@ -41,9 +41,9 @@ public class AVLTreeTest {
 		
 		p = createAVLTree();
 		a = new AVLTree<>();
-		p.displayTree();
+		BinaryTreeUtils.displayTree(p.getRoot());
 		p.put(3, 0);
-		p.displayTree();
+		BinaryTreeUtils.displayTree(p.getRoot());
 		a.put(13, 0);
 		a.put(5, 0);
 		a.put(15, 0);
@@ -57,9 +57,9 @@ public class AVLTreeTest {
 	
 		p = createAVLTree();
 		a = new AVLTree<>();
-		p.displayTree();
+		BinaryTreeUtils.displayTree(p.getRoot());
 		p.put(7, 0);
-		p.displayTree();
+		BinaryTreeUtils.displayTree(p.getRoot());
 		a.put(13, 0);
 		a.put(6, 0);
 		a.put(15, 0);
@@ -78,9 +78,9 @@ public class AVLTreeTest {
 		p.put(35, 0);
 		p.put(32, 0);
 		p.put(40, 0);
-		p.displayTree();
+		BinaryTreeUtils.displayTree(p.getRoot());
 		p.put(45, 0);
-		p.displayTree();
+		BinaryTreeUtils.displayTree(p.getRoot());
 		a.put(35, 0);
 		a.put(30, 0);
 		a.put(40, 0);
@@ -100,9 +100,9 @@ public class AVLTreeTest {
 		p.put(9, 0);
 		p.put(3, 0);
 		p.put(16, 0);
-		p.displayTree();
+		BinaryTreeUtils.displayTree(p.getRoot());
 		p.put(15, 0);
-		p.displayTree();
+		BinaryTreeUtils.displayTree(p.getRoot());
 		a.put(5, 0);
 		a.put(2, 0);
 		a.put(7, 0);
@@ -130,9 +130,9 @@ public class AVLTreeTest {
 		p.put(48, 0);
 		p.put(54, 0);
 		p.put(88, 0);
-		p.displayTree();
+		BinaryTreeUtils.displayTree(p.getRoot());
 		p.delete(32);
-		p.displayTree();
+		BinaryTreeUtils.displayTree(p.getRoot());
 		a.put(62, 0);
 		a.put(44, 0);
 		a.put(78, 0);
@@ -150,9 +150,9 @@ public class AVLTreeTest {
 		p.put(30, 0);
 		p.put(5, 0);
 		p.put(15, 0);
-		p.displayTree();
+		BinaryTreeUtils.displayTree(p.getRoot());
 		p.delete(30);
-		p.displayTree();
+		BinaryTreeUtils.displayTree(p.getRoot());
 		a.put(10, 0);
 		a.put(5, 0);
 		a.put(20, 0);
@@ -169,9 +169,9 @@ public class AVLTreeTest {
 		p.put(45, 0);
 		p.put(55, 0);
 		p.put(10, 0);
-		p.displayTree();
+		BinaryTreeUtils.displayTree(p.getRoot());
 		p.delete(55);
-		p.displayTree();
+		BinaryTreeUtils.displayTree(p.getRoot());
 		a.put(40, 0);
 		a.put(30, 0);
 		a.put(50, 0);
@@ -186,9 +186,9 @@ public class AVLTreeTest {
 		p.put(40, 0);
 		p.put(60, 0);
 		p.put(45, 0);
-		p.displayTree();
+		BinaryTreeUtils.displayTree(p.getRoot());
 		p.delete(60);
-		p.displayTree();
+		BinaryTreeUtils.displayTree(p.getRoot());
 		a.put(45, 0);
 		a.put(40, 0);
 		a.put(50, 0);
